@@ -1,0 +1,14 @@
+[
+    {   
+        "id":1,
+        "product":"laptop",
+        "price":45000,
+        "description":"Lanovo thinkpad RAM 4gb,ROM 1tb"
+    },
+    {
+        "id":2,
+        "product":"Mobile",
+        "price":15000,
+        "description":"redmi 10 prime RAM 4gb"
+    }
+]

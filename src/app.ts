@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 
 app.use('/admin',adminRoutes);
-app.use(shopRoutes);
+app.use('/admin',shopRoutes);
 
 app.use((req:Request,res:Response )=>{
     res.status(404).send('page not found')

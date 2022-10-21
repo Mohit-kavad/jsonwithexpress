@@ -1,23 +1,27 @@
 import express, { Response, Request, NextFunction } from "express";
-import fs from "fs";
-import path from "path";
+import { ProductObject } from "../models/productModel";
 
-exports.getProduct = (req: Request, res: Response) => {
-    const data = fs.readFileSync(path.join(__dirname, "../data.json"),{
-      encoding: "utf-8",
-    });
-    console.log(data);   
-    res.json(JSON.parse(data));
-}
+const Product = require("../models/productModel");
+
+exports.getProducts = (req: Request, res: Response): void => {
+  const readProductData = Product.fetchAll();
+  res.json(JSON.parse(readProductData));
+};
+
+exports.getProduct = (req: Request, res: Response, next: NextFunction) => {
+  const prodId = +req.params.productId;
+  const readProductData = JSON.parse(Product.fetchAll());
+  const findData = readProductData.find((info: ProductObject) => info.id === prodId);
+  res.json(findData)
+};
 
 exports.addProduct = (req: Request, res: Response): void => {
-
-  const readData = fs.readFileSync(path.join(__dirname, "../data.json"),{
-    encoding: "utf-8"
-  });
-  const data = JSON.stringify(req.body,null,2)
-  
-  fs.appendFileSync(path.join(__dirname, "../data.json"),data)
-}
-
-
+  const product = new Product(
+    (req.body.id = Math.random()),
+    req.body.title,
+    req.body.imageUrl,
+    req.body.description,
+    req.body.price
+  );
+  product.save();
+};

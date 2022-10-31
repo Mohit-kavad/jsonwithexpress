@@ -2,12 +2,12 @@ import fs from "fs";
 import path from "path";
 export interface ProductObject {
   id: number;
-  title: string;
+  title: string; 
   imageUrl: string;
   description: string;
   price: number;
 }
-const filePath: string = path.join(__dirname, "../data.json");
+const filePath: string = path.join(__dirname, "../data/data.json");
 
 module.exports = class Product {
   id: number;
@@ -22,7 +22,7 @@ module.exports = class Product {
     description: string,
     price: number
   ) {
-      (this.id = id),
+    (this.id = id),
       (this.title = title),
       (this.imageUrl = imageUrl),
       (this.description = description),

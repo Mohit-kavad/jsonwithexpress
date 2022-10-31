@@ -8,7 +8,7 @@ exports.getProducts = (req: Request, res: Response): void => {
   res.json(JSON.parse(readProductData));
 };
 
-exports.getProduct = (req: Request, res: Response, next: NextFunction) => {
+exports.getProduct = (req: Request, res: Response) => {
   const prodId = +req.params.productId;
   const readProductData = JSON.parse(Product.fetchAll());
   const findData = readProductData.find((info: ProductObject) => info.id === prodId);

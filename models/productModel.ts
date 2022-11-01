@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 export interface ProductObject {
   id: number;
-  title: string; 
+  title: string;
   imageUrl: string;
   description: string;
   price: number;
@@ -33,13 +33,30 @@ module.exports = class Product {
       let products = [];
       if (!err) {
         products = JSON.parse(fileContent.toString());
-        console.log(typeof products);
       }
-      products.push(this);
-      // console.log(products);
-      fs.writeFile(filePath, JSON.stringify(products, null, 2), (err) => {
-        console.log(err);
-      });
+      const productIndex = products.findIndex(
+        (info: ProductObject) => info.id === this.id
+      );
+      console.log(productIndex);
+
+      const productForUpdate = products[productIndex];
+      console.log("product which will be update", productForUpdate);
+
+      // if (this.title) {
+      //   console.log("this id is und:", this.title);
+
+      //   //check is ID already awailable for updating a product
+      //   const productIndex = products.findIndex(
+      //     (info: ProductObject) => info.title === this.title
+      //   );
+      //   console.log(productIndex);
+      // } else {
+      //   // this.id = Math.random();
+      //   products.push(this);
+      //   fs.writeFile(filePath, JSON.stringify(products, null, 2), (err) => {
+      //     console.log("error", err);
+      //   });
+      // }
     });
   }
   static fetchAll(): string {

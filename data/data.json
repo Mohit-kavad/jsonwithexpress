@@ -27,12 +27,25 @@
     "description": "lasn",
     "price": 58000
   },
-
   {
     "id": 0.7794174198232668,
     "title": "newdata",
     "imageUrl": "34kg",
     "description": "ddsdsd",
+    "price": 58000
+  },
+  {
+    "id": 0.5064446312421191,
+    "title": "laptop",
+    "imageUrl": "DFDFD",
+    "description": "Lenovo",
+    "price": 58000
+  },
+  {
+    "id": 0.7495087042755537,
+    "title": "mobile",
+    "imageUrl": "DFDFD",
+    "description": "Lenovo",
     "price": 58000
   }
 ]

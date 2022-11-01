@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const filePath: string = path.join(__dirname, "../data/data.json");
+const filePath: string = path.join(__dirname, "../data/cart.json");
 
 interface Products {
   id: number;
@@ -19,40 +19,31 @@ module.exports = class Cart {
     fs.readFile(filePath, (err, fileContent) => {
       let cart: addToCart = { products: [] };
       if (!err) {
-        cart.products = JSON.parse(fileContent.toString());
+        cart = JSON.parse(fileContent.toString());
+        console.log("cart product", cart);
       }
-
       // Analyze the Cart => Find Existing product
       const existingProductIndex = cart.products.findIndex(
         (prod: Products) => +prod.id === id
       );
       const existingProduct = cart.products[existingProductIndex];
-    //   console.log("updated", existingProduct);
-
+      console.log("existing product", existingProduct);
       let updateProduct;
-
       // Add new Product/increase quantity
-        if (existingProduct) {
-            updateProduct = {...existingProduct}
-            updateProduct.qty= 0;
-            updateProduct.qty = updateProduct.qty + 1;
-            // console.log("quantity value",updateProduct.qty);
-            // console.log(...cart.products);
-            cart.products[existingProductIndex] = updateProduct;
-            // console.log("cart produt last line",cart.products[existingProductIndex]); 
-        }else{
-            updateProduct = { id:id,qty:1};
-            cart.products = [...cart.products,updateProduct]
-        }
-        
-         console.log(cart);
-      fs.writeFile(
-        path.join(__dirname, "../data/cart.json"),
-        JSON.stringify(cart, null, 2),
-        (err) => {
-          console.log("error :",err);
-        }
-      );
+      if (existingProduct) {
+        updateProduct = { ...existingProduct };
+        updateProduct.qty = updateProduct.qty + 1;
+        cart.products = [...cart.products];
+        cart.products[existingProductIndex] = updateProduct;
+      } else {
+        updateProduct = { id: id, qty: 1 };
+        cart.products = [...cart.products, updateProduct];
+      }
+
+      // console.log(cart);
+      fs.writeFile(filePath, JSON.stringify(cart, null, 2), (err) => {
+        console.log("error :", err);
+      });
     });
   }
 };

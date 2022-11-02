@@ -10,7 +10,7 @@ interface Products {
 
 interface addToCart {
   products: Products[];
-  //   totalPrice: number;
+  // totalPrice: number;
 }
 
 module.exports = class Cart {

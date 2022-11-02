@@ -17,8 +17,15 @@ exports.getProduct = (req: Request, res: Response) => {
   res.json(findData);
 };
 
+exports.postDeleteProduct = (req:Request,res:Response)=>{
+  const prodId = +req.body.id;
+  const product = new Product(prodId);
+  const deletedData = product.deleteById()
+  res.json('data Deleted Successfully')
+}
+
 exports.postEditPorduct = (req: Request, res: Response) => {
-  const prodId = +req.body.productId;
+  const prodId = +req.body.id;
   const updateTitle = req.body.title;
   const updateImageUrl = req.body.imageUrl;
   const updateDescription = req.body.description;
@@ -30,7 +37,7 @@ exports.postEditPorduct = (req: Request, res: Response) => {
     updateDescription,
     updatePrice
   );
-  updateJsonData.save();
+  updateJsonData.save();  
 };
 
 exports.addProduct = (req: Request, res: Response): void => {
@@ -43,3 +50,4 @@ exports.addProduct = (req: Request, res: Response): void => {
   );
   product.save();
 };
+

@@ -1,13 +1,13 @@
-import express, { Response, Request, NextFunction } from "express";
-const productControllers = require("../controllers/productController");
+import express from "express";
+const adminControllers = require("../controllers/adminController");
 
 const router = express.Router();
 
-router.get("/add-product", productControllers.getProducts);
-router.post("/add-product", productControllers.addProduct);
+router.get("/add-product", adminControllers.getProducts);
+router.post("/add-product", adminControllers.addProduct);
 
-router.post("/edit-product", productControllers.postEditPorduct);
+router.put("/edit-product/:productId", adminControllers.editPorduct);
 
-router.post('/delete-product',productControllers.postDeleteProduct)
+router.delete('/delete-product/:productId',adminControllers.deleteProduct)
 
 module.exports = router;

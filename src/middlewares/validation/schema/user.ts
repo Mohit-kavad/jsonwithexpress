@@ -1,10 +1,14 @@
-import Joi from "@hapi/joi";
+import Joi from '@hapi/joi';
 
-const createSchema = Joi.object({
-  name: Joi.string().required(),
+const baseSchema = Joi.object({
+  //for login
   email: Joi.string().email().lowercase().required(),
-  password: Joi.string().min(8).required(),
-  confirmPassword: Joi.string().min(8).required(),
+  password: Joi.string().min(8).required()
 });
 
-export { createSchema };
+const createSchema = baseSchema.keys({
+  name: Joi.string().required(),
+  confirmPassword: Joi.valid(Joi.ref('password')).required()
+});
+
+export { createSchema, baseSchema };

@@ -1,16 +1,21 @@
 import { Request, Response } from 'express';
 import { User } from '../models/userModel';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 const signUp = async (req: Request, res: Response) => {
   try {
-    const { name, email, password, confirmPassword } = req.body;
-
+    const { name, email, password } = req.body;
+    const isExist = await User.findOne({ where: { email: email } });
+    if (isExist) {
+      return res.status(403).json({
+        message: 'User already Exist'
+      });
+    }
     const data = await User.create({
       name: name,
       email: email,
-      password: password,
-      confirmPassword: confirmPassword
+      password: await bcrypt.hash(password, 12)
     });
     res.status(201).json({
       status: 200,
@@ -25,34 +30,41 @@ const signUp = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const userExist = await User.findOne({ where: { email: email } });
+    const userExist = await User.findOne({
+      where: { email: email }
+    });
 
-    if (userExist) {
-      const passwordValidate = password === userExist.toJSON().password;
-      let user = userExist;
-      //   jwt
-      const token = jwt.sign(userExist.toJSON(), process.env.JWT_SECRET!, {
-        expiresIn: process.env.JWT_EXPIRES_IN
+    console.log('available column', userExist);
+
+    if (userExist === null) {
+      return res.status(403).json({
+        message: 'user does not Exist'
       });
-      console.log(token);
-
-      console.log('jet token', token);
-      if (passwordValidate) {
-        res.status(200).json({
-          status: 200,
-          message: 'success',
-          token,
-          user
-        });
-      } else {
-        res.status(401).json({ error: 'Incorect Password' });
-      }
-    } else {
-      res.status(401).json({ error: 'Invalid Email' });
     }
+    const passwordValid: boolean = await bcrypt.compare(
+      password,
+      userExist.toJSON().password
+    );
+    if (!passwordValid) {
+      return res.status(403).json({
+        message: 'password is invalid'
+      });
+    }
+    // jwt
+    const token = jwt.sign(
+      { id: userExist.toJSON().id, email: userExist.toJSON().email },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN
+      }
+    );
+    res.status(201).json({
+      status: 200,
+      message: 'success',
+      user: userExist,
+      token
+    });
   } catch (error) {
-    console.log(error);
-
     res.status(500).json(error);
   }
 };

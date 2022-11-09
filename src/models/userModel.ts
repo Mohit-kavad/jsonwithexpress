@@ -20,8 +20,4 @@ export const User = sequelize.define("user", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  confirmPassword: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
 });

@@ -1,11 +1,25 @@
 import { Router } from 'express';
 import { login, signUp } from '../controllers/authContoller';
-import { createValidator } from '../middlewares/validation/validator/user';
+import {
+  deleteUser,
+  getUser,
+  getUsers,
+  updateUser
+} from '../controllers/userController';
+import { schemaValidator } from '../middlewares/validation/validator/user';
 import { loginValidator } from '../middlewares/validation/validator/login';
 const userRouter = Router();
 
-userRouter.post('/signup', createValidator, signUp);
+userRouter.post('/signup', schemaValidator, signUp);
 
 userRouter.post('/login', loginValidator, login);
+
+userRouter.put('/update-user/:id', schemaValidator, updateUser);
+
+userRouter.get('/users', getUsers);
+
+userRouter.get('/user/:id', getUser);
+
+userRouter.delete('/delete-user/:id', deleteUser);
 
 export { userRouter };

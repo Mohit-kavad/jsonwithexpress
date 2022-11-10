@@ -41,7 +41,7 @@ const login = async (req: Request, res: Response) => {
         message: 'user does not Exist'
       });
     }
-    const passwordValid: boolean = await bcrypt.compare(
+    const passwordValid = await bcrypt.compare(
       password,
       userExist.toJSON().password
     );

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { baseSchema, createSchema } from '../schema/user';
+import { createSchema } from '../schema/user';
 
-const createValidator = (req: Request, res: Response, next: NextFunction) => {
+const schemaValidator = (req: Request, res: Response, next: NextFunction) => {
   try {
     const { error } = createSchema.validate(req.body);
 
@@ -12,4 +12,4 @@ const createValidator = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { createValidator };
+export { schemaValidator };

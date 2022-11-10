@@ -1,20 +1,23 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   addProduct,
   deleteProduct,
   editPorduct,
-  getProducts,
-} from "../controllers/adminController";
-import { createValidator } from "../middlewares/validation/validator/product";
+  getProduct,
+  getProducts
+} from '../controllers/adminController';
+import { schemaValidator } from '../middlewares/validation/validator/product';
 
 const adminRouter = Router();
 
-adminRouter.post("/add-product", createValidator, addProduct);
+adminRouter.post('/add-product', schemaValidator, addProduct);
 
-adminRouter.put("/edit-product/:productId", editPorduct);
+adminRouter.put('/edit-product/:productId', schemaValidator, editPorduct);
 
-adminRouter.get("/add-product/:id", getProducts);
+adminRouter.get('/products/', getProducts);
 
-adminRouter.delete("/delete-product/:productId", deleteProduct);
+adminRouter.get('/product/:id', getProduct);
+
+adminRouter.delete('/delete-product/:productId', deleteProduct);
 
 export { adminRouter };

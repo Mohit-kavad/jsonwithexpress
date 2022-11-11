@@ -1,5 +1,4 @@
 import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
-import { SequelizeMethod } from 'sequelize/types/utils';
 import { sequelize } from '../util/database';
 
 interface UserAttributes {

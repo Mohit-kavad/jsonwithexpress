@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 const signUp = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     const isExist = await User.findOne({ where: { email: email } });
     if (isExist) {
       return res.status(403).json({
@@ -15,7 +15,8 @@ const signUp = async (req: Request, res: Response) => {
     const data = await User.create({
       name: name,
       email: email,
-      password: await bcrypt.hash(password, 12)
+      password: await bcrypt.hash(password, 12),
+      role: role
     });
     res.status(201).json({
       status: 200,
@@ -30,7 +31,7 @@ const signUp = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const userExist = await User.findOne({
+    let userExist = await User.findOne({
       where: { email: email }
     });
 

@@ -8,7 +8,8 @@ const baseSchema = Joi.object({
 
 const createSchema = baseSchema.keys({
   name: Joi.string().required(),
-  confirmPassword: Joi.valid(Joi.ref('password')).required()
+  confirmPassword: Joi.valid(Joi.ref('password')).required(),
+  role: Joi.string().valid('admin', 'user')
 });
 
 export { createSchema, baseSchema };

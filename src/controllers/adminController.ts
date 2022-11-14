@@ -32,7 +32,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     const prodId = +req.params.productId;
     const data = await Product.destroy({ where: { id: prodId } });
     res.json({
-      status: 200,
+      status: 204,
       data: data,
       messege: 'Data Deleted Successfully'
     });

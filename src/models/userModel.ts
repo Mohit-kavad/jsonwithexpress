@@ -1,4 +1,4 @@
-import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
+import { DataTypes, ModelDefined, Optional } from 'sequelize';
 import { sequelize } from '../util/database';
 
 interface UserAttributes {
@@ -6,6 +6,7 @@ interface UserAttributes {
   name: string;
   email: string;
   password: string;
+  role: string;
 }
 
 type UserCreationAttributes = Optional<UserAttributes, 'id'>;
@@ -31,6 +32,11 @@ const User: ModelDefined<UserAttributes, UserCreationAttributes> =
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    role: {
+      type: DataTypes.ENUM('admin', 'user'),
+      allowNull: false,
+      defaultValue: 'user'
     }
   });
 

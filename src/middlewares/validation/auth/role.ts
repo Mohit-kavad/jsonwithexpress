@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-const roleAuthorization = (role: string) => {
+const roleAuthorization = (...role: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     // check is user logedin with user or admin if yes then....
     //@ts-ignore

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/userModel';
+import { User } from '../../models/user';
 import bcrypt from 'bcrypt';
 
 const getUsers = async (req: Request, res: Response) => {
@@ -57,8 +57,9 @@ const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = +req.params.id;
     const { password } = req.body;
-    //@ts-ignore
-    console.log('req.user ::', req.user);
+
+    // //@ts-ignore
+    // console.log('req.user ::', req.user);
 
     const data = await User.update(
       { ...req.body, password: await bcrypt.hash(password, 12) },

@@ -21,8 +21,7 @@ app.use((req: Request, res: Response) => {
 });
 
 sequelize
-  // .sync({ force: true })
-  .sync()
+  .authenticate()
   .then(() => {
     app.listen(8000);
   })

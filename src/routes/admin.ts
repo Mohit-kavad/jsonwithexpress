@@ -34,8 +34,8 @@ adminRouter.get('/product/:id', verifyToken, getProduct);
 
 adminRouter.delete(
   '/delete-product/:productId',
-  roleAuthorization('admin'),
   verifyToken,
+  roleAuthorization('admin'),
   deleteProduct
 );
 

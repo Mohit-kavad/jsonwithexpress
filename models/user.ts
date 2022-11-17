@@ -16,7 +16,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare role: string;
 
   static associate(models: any) {
-    User.hasMany(models.Product);
+    User.hasMany(models.Product, { onDelete: 'cascade' });
   }
 }
 User.init(

@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 import { Product } from '../../models/product';
+import { User } from '../../models/user';
 
 const getProducts = async (req: Request, res: Response) => {
   try {
@@ -17,7 +18,15 @@ const getProduct = async (req: Request, res: Response) => {
   try {
     const prodId = +req.params.id;
     // Product.findAll({where:{id:prodId}})
-    const data = await Product.findByPk(prodId);
+    const data = await Product.findOne({
+      where: { id: prodId },
+      include: [
+        {
+          model: User,
+          as: 'userInfo'
+        }
+      ]
+    });
     res.json({
       status: 200,
       product: data
@@ -65,7 +74,9 @@ const addProduct = async (req: Request, res: Response) => {
       title: title,
       price: price,
       imageUrl: imageUrl,
-      description: description
+      description: description,
+      //@ts-ignore
+      userId: req.user.id
     });
     res.status(200).json({
       status: 200,

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { User } from '../../models/user';
 import bcrypt from 'bcrypt';
+import { Product } from '../../models/product';
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -18,7 +19,15 @@ const getUsers = async (req: Request, res: Response) => {
 const getUser = async (req: Request, res: Response) => {
   try {
     const userId = +req.params.id;
-    const data = await User.findByPk(userId);
+    const data = await User.findOne({
+      where: { id: userId },
+      include: [
+        {
+          model: Product,
+          as: 'products'
+        }
+      ]
+    });
     if (data === null) {
       return res.status(202).json({
         message: 'user is not found or deleted '

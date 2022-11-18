@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import express, { Application, Response, Request } from 'express';
 // import { sequelize } from './util/database'; // without use of sequelize-cli
-import { sequelize } from '../models/index'; // using sequelize-cli
+import { sequelize } from '../models/connection'; // using sequelize-cli
 import { adminRouter, userRouter } from './routes/index';
 import dotenv from 'dotenv';
 

@@ -3,9 +3,10 @@ import {
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
-  CreationOptional
+  CreationOptional,
+  ForeignKey
 } from 'sequelize';
-import { sequelize } from './index';
+import { sequelize } from './connection';
 
 class Product extends Model<
   InferAttributes<Product>,
@@ -16,15 +17,7 @@ class Product extends Model<
   declare price: number;
   declare imageUrl: string;
   declare description: string;
-  declare userId: number;
-
-  static associate(models: any) {
-    // define association here
-    Product.belongsTo(models.User, {
-      foreignKey: 'userId',
-      targetKey: 'userId'
-    });
-  }
+  declare userId: ForeignKey<number>;
 }
 Product.init(
   {

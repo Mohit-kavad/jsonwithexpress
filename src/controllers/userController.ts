@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { User } from '../../models/user';
+import { User, Product } from '../../models/index';
 import bcrypt from 'bcrypt';
-import { Product } from '../../models/product';
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -23,11 +22,11 @@ const getUser = async (req: Request, res: Response) => {
       where: { id: userId },
       include: [
         {
-          model: Product,
-          as: 'products'
+          model: Product
         }
       ]
     });
+
     if (data === null) {
       return res.status(202).json({
         message: 'user is not found or deleted '
@@ -39,6 +38,8 @@ const getUser = async (req: Request, res: Response) => {
       data
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json(error);
   }
 };

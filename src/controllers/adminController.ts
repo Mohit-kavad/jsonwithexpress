@@ -1,6 +1,5 @@
 import { Response, Request } from 'express';
-import { Product } from '../../models/product';
-import { User } from '../../models/user';
+import { Product, User } from '../../models/index';
 
 const getProducts = async (req: Request, res: Response) => {
   try {
@@ -22,8 +21,8 @@ const getProduct = async (req: Request, res: Response) => {
       where: { id: prodId },
       include: [
         {
-          model: User,
-          as: 'userInfo'
+          model: User
+          // as: 'userInfo'
         }
       ]
     });

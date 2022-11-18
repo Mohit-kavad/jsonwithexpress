@@ -5,8 +5,7 @@ import {
   InferCreationAttributes,
   CreationOptional
 } from 'sequelize';
-import { sequelize } from './index';
-import { Product } from './product';
+import { sequelize } from './connection';
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
@@ -14,10 +13,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare email: string;
   declare password: string;
   declare role: string;
-
-  static associate(models: any) {
-    User.hasMany(models.Product, { onDelete: 'cascade' });
-  }
 }
 User.init(
   {
